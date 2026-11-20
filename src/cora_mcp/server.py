@@ -9,6 +9,7 @@ from mcp.server.transport_security import TransportSecuritySettings
 from mcp.types import ToolAnnotations
 
 from .catalog import (
+    REPO_ROOT,
     brick,
     bricks,
     capital_build_path,
@@ -25,6 +26,7 @@ from .catalog import (
     search,
 )
 from .steward import review_event
+from .team_report import report_for
 
 
 mcp = MCPServer(
@@ -364,6 +366,13 @@ def recognition_path() -> dict[str, object]:
 def steward_review_event(event: dict[str, object]) -> dict[str, object]:
     """Create a draft-only evidence and routing packet from a GitHub event."""
     return review_event(event)
+
+
+@mcp.tool(annotations=READ_ONLY)
+def team_report(date: str) -> str:
+    """Roll one day's public stand-up records into a Markdown team report."""
+    report, _warnings = report_for(REPO_ROOT, date)
+    return report
 
 
 @mcp.prompt()
