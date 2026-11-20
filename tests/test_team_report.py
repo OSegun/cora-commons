@@ -8,6 +8,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from mcp import Client
+
+from cora_mcp.server import mcp
 from cora_mcp.team_report import _minimal_validate, build_report, load_standups, report_for
 
 
@@ -108,6 +111,17 @@ class TeamReportTests(unittest.TestCase):
             "need": [{"text": "x", "from": "boss"}],
         }
         self.assertEqual(_minimal_validate(record, "CONTRIBUTIONS/standups/2026-11-19-demo-ana.json"), ["need[0] is invalid"])
+
+
+class TeamReportToolTests(unittest.IsolatedAsyncioTestCase):
+    async def test_mcp_tool_returns_report_and_rejects_bad_date(self) -> None:
+        async with Client(mcp) as client:
+            result = await client.call_tool("team_report", {"date": REPORT_DATE})
+            self.assertFalse(result.is_error)
+            self.assertTrue(result.content[0].text.startswith(f"# Team report {REPORT_DATE}\n"))
+
+            bad = await client.call_tool("team_report", {"date": "yesterday"})
+            self.assertTrue(bad.is_error)
 
 
 if __name__ == "__main__":
