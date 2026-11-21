@@ -17,6 +17,8 @@ PYTHONPATH=src python -m cora_mcp.receipts validate CONTRIBUTIONS/receipts/CR-YY
 PYTHONPATH=src python -m cora_mcp.receipts validate-all
 ```
 
+Public stand-up records use `PYTHONPATH=src python -m cora_mcp.standups validate-all --repo-root .` and live in `CONTRIBUTIONS/standups/`.
+
 ## What a receipt preserves
 
 - human and agent attribution, roles, operator and authority;

@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1",
+  "date": "2026-11-20",
+  "member": "example-human",
+  "shipped": [
+    {
+      "text": "Reviewed the public contribution workflow.",
+      "link": "https://github.com/jamessunheart/cora-commons/issues/35"
+    }
+  ],
+  "blocked": [],
+  "need": [
+    {
+      "text": "An independent reviewer after delivery.",
+      "from": "steward"
+    }
+  ]
+}

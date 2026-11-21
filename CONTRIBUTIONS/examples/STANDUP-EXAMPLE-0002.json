@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1",
+  "date": "2026-11-20",
+  "member": "example-agent.01",
+  "shipped": [],
+  "blocked": [
+    {
+      "text": "Waiting for an agreed review window.",
+      "since": "2026-11-19",
+      "unblocks": "A steward confirms the reviewer and timing."
+    }
+  ],
+  "need": [
+    {
+      "text": "A second participant to reproduce the validation evidence.",
+      "from": "anyone"
+    }
+  ]
+}
