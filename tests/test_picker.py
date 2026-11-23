@@ -122,6 +122,17 @@ class PickerTests(unittest.TestCase):
         self.assertFalse(self.worktree.exists())
         self.assertEqual(git(self.repo, "status", "--porcelain"), "")
 
+    def test_number_task_id_is_refused_before_any_branch_or_worktree(self) -> None:
+        self.write_tasks([TASKS[0], {**TASKS[1], "id": 2, "priority": 1}])
+        result = self.run_picker()
+        self.assertEqual(result.returncode, 2)
+        self.assertIn("tasks[1] must have text id", result.stderr)
+        self.assertNotIn("Traceback", result.stderr)
+        self.assertEqual(result.stdout, "")
+        self.assertFalse(self.worktree.exists())
+        branch = subprocess.run(["git", "rev-parse", "--verify", "--quiet", f"refs/heads/{BRANCH}"], cwd=self.repo)
+        self.assertNotEqual(branch.returncode, 0)
+
 
 if __name__ == "__main__":
     unittest.main()
